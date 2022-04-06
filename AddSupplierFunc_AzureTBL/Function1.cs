@@ -24,14 +24,16 @@ namespace AddSupplierFunc_AzureTBL
             {
                 string datetimeTick = DateTime.UtcNow.Ticks.ToString();
 
+                string connectionString  = Environment.GetEnvironmentVariable("ConnectionString");
+
                 /// get storage account
-                CloudStorageAccount storageAcc = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=tablestorage1;AccountKey=mvdDaDEswE16qPIWefkIjcpiNjpvC8GbXEglDBjrMKItK0QsFXFxr0SwNSjIdzdKeDrShIZ6abHw+AStfRWs5A==;EndpointSuffix=core.windows.net");
+                CloudStorageAccount storageAcc = CloudStorageAccount.Parse(connectionString);
 
                 //// create table client
                 CloudTableClient tblclient = storageAcc.CreateCloudTableClient(new TableClientConfiguration());
 
                 // get customer table
-                CloudTable cloudTable = tblclient.GetTableReference("Supplier");
+                CloudTable cloudTable = tblclient.GetTableReference("Suppliers");
                 string requestBody;
                 using (StreamReader streamReader = new StreamReader(req.Body))
                 {
